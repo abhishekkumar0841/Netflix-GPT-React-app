@@ -6,7 +6,6 @@ const Login = () => {
   const [signInForm, setSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const name = useRef(null);
   const username = useRef(null);
   const password = useRef(null);
 
@@ -16,7 +15,6 @@ const Login = () => {
 
   const handleSubmit = () => {
     const msg = checkValidateData(
-      name.current.value,
       username.current.value,
       password.current.value
     );
@@ -25,7 +23,6 @@ const Login = () => {
     }
     if (msg === null) {
       setErrorMessage("");
-      name.current.value = "";
       username.current.value = "";
       password.current.value = "";
     }
@@ -52,7 +49,6 @@ const Login = () => {
           </h1>
           {!signInForm && (
             <input
-              ref={name}
               type="text"
               placeholder="Name"
               className=" px-4 py-2 font-semibold rounded-md text-xl bg-gray-700"
@@ -76,7 +72,7 @@ const Login = () => {
           >
             {signInForm ? "Sign In" : "Sign Up"}
           </button>
-          <div>{errorMessage && <h1>{errorMessage}</h1>}</div>
+          <div>{errorMessage && <h1 className=" text-xl font-bold text-red-500"><sup>**</sup>{errorMessage} <sup>**</sup></h1>}</div>
           <div onClick={toggleForm} className=" cursor-pointer">
             <span className=" text-gray-400">
               {signInForm ? "New to netflix?" : "Already have an account?"}
