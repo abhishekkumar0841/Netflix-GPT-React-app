@@ -1,8 +1,11 @@
 import React from 'react'
+import Body from './components/Body'
 
 const App = () => {
   return (
-    <div className=' text-6xl'>App</div>
+    <div className=' '>
+      <Body/>
+    </div>
   )
 }
 
