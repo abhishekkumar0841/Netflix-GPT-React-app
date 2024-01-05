@@ -11,6 +11,10 @@
 - Firebase setup
 - Deploying our app to production using firebase hosting
 - Create sign-up user account
+- Implementing sign-in user api
+- Create our Redux store using redux toolkit
+- Implemented Sign-out features
+- Implemented update profile api also
 
 # Features:
 - Login / Sign-up page
