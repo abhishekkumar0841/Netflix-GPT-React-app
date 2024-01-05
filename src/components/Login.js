@@ -1,30 +1,76 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidateData } from "../utils/validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const Login = () => {
   const [signInForm, setSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const username = useRef(null);
+  const name = useRef(null);
+  const email = useRef(null);
   const password = useRef(null);
 
   const toggleForm = () => {
     setSignInForm(!signInForm);
   };
-
   const handleSubmit = () => {
-    const msg = checkValidateData(
-      username.current.value,
-      password.current.value
-    );
-    if (msg !== null) {
+    const msg = checkValidateData(email.current.value, password.current.value);
+
+    if (msg) {
       setErrorMessage(msg);
+      return;
     }
-    if (msg === null) {
-      setErrorMessage("");
-      username.current.value = "";
-      password.current.value = "";
+
+    // sign in / sign up logic
+    if (!signInForm) {
+      //sign-up logic
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log("Registered User:", user);
+          setErrorMessage("");
+          name.current.value = "";
+          email.current.value = "";
+          password.current.value = "";
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "-" + errorMessage);
+        });
+    } else {
+      //sign-in logic
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log("Logged in user:", user);
+          setErrorMessage("");
+          email.current.value = "";
+          password.current.value = "";
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "-" + errorMessage);
+        });
+    }
+
+    if (!msg) {
     }
   };
 
@@ -33,10 +79,10 @@ const Login = () => {
       style={{
         backgroundImage:
           'url("https://assets.nflxext.com/ffe/siteui/vlv3/c38a2d52-138e-48a3-ab68-36787ece46b3/eeb03fc9-99c6-438e-824d-32917ce55783/IN-en-20240101-popsignuptwoweeks-perspective_alpha_website_large.jpg")',
+        backgroundSize: "cover",
         height: "100vh",
         width: "100vw",
       }}
-      className=" object-cover "
     >
       <Header />
       <div className=" min-h-[85vh] w-full flex justify-center items-center">
@@ -49,13 +95,14 @@ const Login = () => {
           </h1>
           {!signInForm && (
             <input
+              ref={name}
               type="text"
               placeholder="Name"
               className=" px-4 py-2 font-semibold rounded-md text-xl bg-gray-700"
             />
           )}
           <input
-            ref={username}
+            ref={email}
             type="text"
             placeholder="User name"
             className=" px-4 py-2 font-semibold rounded-md text-xl bg-gray-700"
@@ -72,7 +119,14 @@ const Login = () => {
           >
             {signInForm ? "Sign In" : "Sign Up"}
           </button>
-          <div>{errorMessage && <h1 className=" text-xl font-bold text-red-500"><sup>**</sup>{errorMessage} <sup>**</sup></h1>}</div>
+          {errorMessage && (
+            <div>
+              <h1 className=" text-xl font-bold text-red-500">
+                <sup>**</sup>
+                {errorMessage} <sup>**</sup>
+              </h1>
+            </div>
+          )}
           <div onClick={toggleForm} className=" cursor-pointer">
             <span className=" text-gray-400">
               {signInForm ? "New to netflix?" : "Already have an account?"}
