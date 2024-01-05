@@ -15,6 +15,10 @@
 - Create our Redux store using redux toolkit
 - Implemented Sign-out features
 - Implemented update profile api also
+- Bug-fix: Sign up user display and profile picture update
+- Bug-fix: If user is already logged in redirect him to browse page, if not logged in redirect to login page
+- Unsubscribe to the onAuthStateChanged callback
+- Added all hard coded values in constant files
 
 # Features:
 - Login / Sign-up page

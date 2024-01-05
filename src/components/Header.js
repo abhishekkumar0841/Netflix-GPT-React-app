@@ -1,28 +1,55 @@
-import React from "react";
-import { signOut } from "firebase/auth";
+import React, { useEffect } from "react";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser, removeUser } from "../utils/userSlice";
+import { defaultAvatarUrl, logo } from "../utils/constants";
 
 function Header() {
-  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
-        navigate("/");
       })
       .catch((error) => {
         // An error happened.
+        navigate("/error");
       });
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          })
+        );
+        navigate("/browse");
+      } else {
+        // User is signed out
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div className=" px-8 py-2 bg-gradient-to-b from-black h-[15vh] flex items-center justify-between">
       <img
         className=" w-52"
-        src="https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
+        src={logo}
         alt="Logo"
       />
       {user && (
@@ -31,7 +58,7 @@ function Header() {
             src={
               user?.photoURL
                 ? user?.photoURL
-                : "https://avatars.githubusercontent.com/u/6759280?v=4"
+                : defaultAvatarUrl
             }
             alt=""
             width={50}

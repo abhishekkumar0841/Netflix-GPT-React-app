@@ -7,14 +7,13 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { loginPageBackgroundImage, userNamedAvatar } from "../utils/constants";
 
 const Login = () => {
   const [signInForm, setSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const name = useRef(null);
@@ -45,7 +44,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name?.current?.value,
-            photoURL: `https://api.dicebear.com/5.x/initials/svg?seed=${name?.current?.value}`,
+            photoURL: `${userNamedAvatar}${name?.current?.value}`,
           })
             .then(() => {
               // Profile updated!
@@ -63,7 +62,6 @@ const Login = () => {
               // name.current.value = "";
               // email.current.value = "";
               // password.current.value = "";
-              navigate("/browse");
             })
             .catch((error) => {
               // An error occurred
@@ -89,7 +87,6 @@ const Login = () => {
           setErrorMessage("");
           email.current.value = "";
           password.current.value = "";
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -102,8 +99,7 @@ const Login = () => {
   return (
     <div
       style={{
-        backgroundImage:
-          'url("https://assets.nflxext.com/ffe/siteui/vlv3/c38a2d52-138e-48a3-ab68-36787ece46b3/eeb03fc9-99c6-438e-824d-32917ce55783/IN-en-20240101-popsignuptwoweeks-perspective_alpha_website_large.jpg")',
+        backgroundImage: `url(${loginPageBackgroundImage})`,
         backgroundSize: "cover",
         height: "100vh",
         width: "100vw",
