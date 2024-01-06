@@ -14,9 +14,8 @@ export const API_OPTIONS = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MjI4YjliMTM3Mjk1MzNlYmViODE3OGM2YTI0NzQ4YyIsInN1YiI6IjY0ZDcxNzc1MDAxYmJkMDBjNmM2YjAxZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Q7bCCxHCivH7AU3eXFWNU6Xj9EQV5e97Cf4Pj9MnkPY",
+    Authorization: process.env.REACT_APP_TOKEN,
   },
 };
 
-// export const youtube_url = 'https://www.youtube.com/watch?v='
+export const tmdb_img_cdn = "https://image.tmdb.org/t/p/w780/";

@@ -7,7 +7,11 @@ const MainContainer = () => {
   const movies = useSelector((state) => state.movies?.nowPlayingMovies);
   //early return (if movies null) because of code not break. I can also solve with this--> movies?.[0]
   if (!movies) return;
-  const mainMovies = movies[3];
+
+  //generating random number to show random movie trailer
+  const randomNumber = Math.floor(Math.random() * 20)
+
+  const mainMovies = movies[randomNumber];
   const { overview, title, id} = mainMovies;
 
   return (

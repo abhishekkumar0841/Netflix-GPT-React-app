@@ -30,6 +30,17 @@
 - Embedded the Youtube video and make it auto play and mute
 - Tailwind Classes to make Main Container Look awesome
 - Add react-icons
+- Building secondary component
+- .env file created and transfer the TMDB bearer token inside this
+- Generating random number to show random movie trailer
+- Build Movie Lists
+- Build Movie Card
+- Using TMDB image CDN url for movies cards
+- Create useUpcomingMovies custom hook
+- Create usePopularMovies custom hook
+- Create useTopRatedMovies custom hook
+- Make UI to look better
+
 
 # Features:
 - Login / Sign-up page
