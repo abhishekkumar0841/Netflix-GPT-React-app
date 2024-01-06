@@ -46,7 +46,7 @@ function Header() {
   }, []);
 
   return (
-    <div className=" px-8 py-2 bg-gradient-to-b from-black h-[15vh] flex items-center justify-between">
+    <div className="absolute w-screen z-50 px-8 py-2 bg-gradient-to-b from-black h-[15vh] flex items-center justify-between">
       <img
         className=" w-52"
         src={logo}

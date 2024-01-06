@@ -19,6 +19,17 @@
 - Bug-fix: If user is already logged in redirect him to browse page, if not logged in redirect to login page
 - Unsubscribe to the onAuthStateChanged callback
 - Added all hard coded values in constant files
+- Register TMDB API and create an app & get access token
+- Get data from TMDB now playing movies api
+- Custom Hook for Now Playing Movies
+- Create movieSlice
+- Update Store with movies Data
+- Planning for Main Container & secondary container
+- Fetch Data for Trailer Video
+- Update Store with Trailer Video Data
+- Embedded the Youtube video and make it auto play and mute
+- Tailwind Classes to make Main Container Look awesome
+- Add react-icons
 
 # Features:
 - Login / Sign-up page
