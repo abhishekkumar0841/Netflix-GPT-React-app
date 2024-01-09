@@ -9,7 +9,6 @@ const usePopularMovies = () => {
     fetch("https://api.themoviedb.org/3/movie/popular?page=1", API_OPTIONS)
       .then((response) => response?.json())
       .then((data) => {
-        console.log('popu', data);
         dispatch(addPopularMovies(data?.results));
       });
   };

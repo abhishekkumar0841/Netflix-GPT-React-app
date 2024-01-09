@@ -5,11 +5,18 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { defaultAvatarUrl, logo } from "../utils/constants";
+import { toggleGPTSearchView } from "../utils/gptSlice";
+import { SiOpenai } from "react-icons/si";
 
 function Header() {
   const user = useSelector((state) => state.user);
+  const showGPTSearch = useSelector((state) => state.gpt.showGPTSearch);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const handleGPTSearchClick = () => {
+    dispatch(toggleGPTSearchView());
+  };
 
   const handleLogout = () => {
     signOut(auth)
@@ -47,24 +54,36 @@ function Header() {
 
   return (
     <div className="absolute w-screen z-50 px-8 py-2 bg-gradient-to-b from-black h-[15vh] flex items-center justify-between">
-      <img
-        className=" w-52"
-        src={logo}
-        alt="Logo"
-      />
+      <div className=" flex-1">
+        <img className=" w-52" src={logo} alt="Logo" />
+      </div>
       {user && (
-        <div className="cursor-pointer" onClick={handleLogout}>
-          <img
-            src={
-              user?.photoURL
-                ? user?.photoURL
-                : defaultAvatarUrl
-            }
-            alt=""
-            width={50}
-          />
-          <h1 className=" text-white font-semibold">Logout</h1>
-        </div>
+        <>
+          <div className="flex-1 flex flex-col items-center">
+            <button
+              onClick={handleGPTSearchClick}
+              className={`${
+                !showGPTSearch
+                  ? "text-green-400 font-bold text-4xl text-opacity-60 hover:text-opacity-100 transition-all duration-300 ease-in-out"
+                  : "text-green-400 font-bold text-6xl transition-all duration-300 ease-in-out animate-spin"
+              }`}
+              style={{ animationDuration: "2s" }}
+            >
+              <SiOpenai />
+            </button>
+          </div>
+          <div
+            className="cursor-pointer flex-1 flex flex-col items-end"
+            onClick={handleLogout}
+          >
+            <img
+              src={user?.photoURL ? user?.photoURL : defaultAvatarUrl}
+              alt=""
+              width={50}
+            />
+            <h1 className=" text-white font-semibold">Logout</h1>
+          </div>
+        </>
       )}
     </div>
   );

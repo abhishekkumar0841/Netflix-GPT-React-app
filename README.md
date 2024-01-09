@@ -40,6 +40,9 @@
 - Create usePopularMovies custom hook
 - Create useTopRatedMovies custom hook
 - Make UI to look better
+- Hide scroll-bar from MovieLists component
+- Make iframe un clickable of browse page
+- GPT Search Feature
 
 
 # Features:
@@ -53,6 +56,8 @@
         - Title and Description
         - Movie suggestion
             - Movies lists * n
-- Netflix GPt
+- Netflix GPT
+        - GPT API is an API which are built and managed by the Open AI
+        -  Developers can use the OpenAI GPT API to integrate GPT models into their applications and create custom interfaces on top of the API for specific use cases.
     - Search bar
     - Movie suggestions
