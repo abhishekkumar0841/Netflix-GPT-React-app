@@ -43,6 +43,9 @@
 - Hide scroll-bar from MovieLists component
 - Make iframe un clickable of browse page
 - GPT Search Feature
+- (FEATURE) Adding multi language functionality for GPTSearchPage
+- Add GPT Search page
+- Add GPT Search Bar
 
 
 # Features:

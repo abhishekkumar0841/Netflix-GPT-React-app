@@ -7,6 +7,8 @@ import { addUser, removeUser } from "../utils/userSlice";
 import { defaultAvatarUrl, logo } from "../utils/constants";
 import { toggleGPTSearchView } from "../utils/gptSlice";
 import { SiOpenai } from "react-icons/si";
+import { SUPPORTED_LANGUAGES } from "../utils/languageConstant";
+import { changeLanguage } from "../utils/configSlice";
 
 function Header() {
   const user = useSelector((state) => state.user);
@@ -52,6 +54,10 @@ function Header() {
     return () => unsubscribe();
   }, []);
 
+  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
+  };
+
   return (
     <div className="absolute w-screen z-50 px-8 py-2 bg-gradient-to-b from-black h-[15vh] flex items-center justify-between">
       <div className=" flex-1">
@@ -72,16 +78,32 @@ function Header() {
               <SiOpenai />
             </button>
           </div>
-          <div
-            className="cursor-pointer flex-1 flex flex-col items-end"
-            onClick={handleLogout}
-          >
-            <img
-              src={user?.photoURL ? user?.photoURL : defaultAvatarUrl}
-              alt=""
-              width={50}
-            />
-            <h1 className=" text-white font-semibold">Logout</h1>
+          <div className="flex-1  flex justify-end gap-10">
+            {showGPTSearch && (
+              <div className="">
+                <select
+                  className=" py-2 px-3 cursor-pointer bg-transparent font-semibold border-2 rounded-sm border-indigo-300 text-indigo-300"
+                  onChange={handleLanguageChange}
+                >
+                  {SUPPORTED_LANGUAGES.map((lang) => (
+                    <option key={lang.identifier} value={lang.identifier}>
+                      {lang.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+            <div
+              className="cursor-pointer  flex flex-col items-end"
+              onClick={handleLogout}
+            >
+              <img
+                src={user?.photoURL ? user?.photoURL : defaultAvatarUrl}
+                alt=""
+                width={50}
+              />
+              <h1 className=" text-white font-semibold">Logout</h1>
+            </div>
           </div>
         </>
       )}
